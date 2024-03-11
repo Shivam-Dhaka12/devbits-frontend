@@ -1,37 +1,56 @@
+import { Link } from 'react-router-dom';
+
 export interface BlogCardProps {
 	authorName: string;
 	title: string;
 	content: string;
 	publishedDate: string;
+	id: string;
 }
 
 export function BlogCard({
+	id,
 	authorName,
 	title,
 	content,
 	publishedDate,
 }: BlogCardProps) {
 	return (
-		<div className="border-b border-b-slate-400 px-4  pb-8 mt-10">
-			<div className="text-sm">
-				<div className="mr-4 inline-block">
-					<AvatarInitials authorName={authorName} />
+		<Link
+			to={{
+				pathname: `/blog/${id}`,
+				state: {
+					author,
+					publishedDate,
+					title,
+					content,
+				},
+			}}
+			className="min-w-full"
+		>
+			<div className="border-b border-b-slate-400 px-4 pb-8 mt-10   cursor-pointer">
+				<div className="text-sm">
+					<div className="mr-4 inline-block">
+						<AvatarInitials authorName={authorName} />
+					</div>
+					<span>{authorName}</span>
+					<span className="text-slate-600 mx-2"> &bull; </span>
+					<span className="text-slate-600 text-sm">
+						{publishedDate}
+					</span>
 				</div>
-				<span>{authorName}</span>
-				<span className="text-slate-600 mx-2"> &bull; </span>
-				<span className="text-slate-600 text-sm">{publishedDate}</span>
-			</div>
-			<div className="text-2xl font-bold tracking-tighter my-2 text-slate-900">
-				{title}
-			</div>
+				<div className="text-2xl font-bold tracking-tighter my-2 text-slate-900">
+					{title}
+				</div>
 
-			<div className="text-slate-700 text-sm">
-				{content.slice(0, 200) + '...'}
+				<div className="text-slate-700 text-sm">
+					{content.slice(0, 200) + '...'}
+				</div>
+				<div className="text-slate-600 mt-8 mb-6">{`${Math.ceil(
+					content.length / 400
+				)} min read`}</div>
 			</div>
-			<div className="text-slate-600 mt-8 mb-6">{`${Math.ceil(
-				content.length / 400
-			)} min read`}</div>
-		</div>
+		</Link>
 	);
 }
 
