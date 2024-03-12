@@ -19,19 +19,13 @@ export function BlogCard({
 		<Link
 			to={{
 				pathname: `/blog/${id}`,
-				state: {
-					author,
-					publishedDate,
-					title,
-					content,
-				},
 			}}
 			className="min-w-full"
 		>
 			<div className="border-b border-b-slate-400 px-4 pb-8 mt-10   cursor-pointer">
 				<div className="text-sm">
 					<div className="mr-4 inline-block">
-						<AvatarInitials authorName={authorName} />
+						<AvatarInitials authorName={authorName} size="sm" />
 					</div>
 					<span>{authorName}</span>
 					<span className="text-slate-600 mx-2"> &bull; </span>
@@ -54,7 +48,13 @@ export function BlogCard({
 	);
 }
 
-export function AvatarInitials({ authorName }: { authorName: string }) {
+export function AvatarInitials({
+	authorName,
+	size,
+}: {
+	authorName: string;
+	size: 'sm' | 'lg';
+}) {
 	if (!authorName) return;
 
 	const initialsArray = authorName.split(' ');
@@ -63,8 +63,12 @@ export function AvatarInitials({ authorName }: { authorName: string }) {
 		(initialsArray.length > 1 ? initialsArray[1][0] : '');
 
 	return (
-		<div className="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-800">
-			<span className="font-medium text-gray-800 dark:text-gray-300 text-xs">
+		<div
+			className={`relative inline-flex items-center justify-center ${
+				size === 'sm' ? 'w-6 h-6' : 'w-8 h-8'
+			} h-6 overflow-hidden bg-gray-800 rounded-full`}
+		>
+			<span className="font-medium text-gray-300 text-xs">
 				{initials}
 			</span>
 		</div>

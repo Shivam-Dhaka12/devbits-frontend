@@ -15,17 +15,18 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 
 	const navigate = useNavigate();
 
-	async function sendRequest() {
+	async function sendRequest(e: React.FormEvent) {
+		e.preventDefault();
 		try {
 			const url = `${BACKEND_URL}/api/v1/user/${
 				type == 'signup' ? 'signup' : 'signin'
 			}`;
 			const response = await axios.post(url, postInputs);
-			const jwt = response.data;
+			const jwt = response.data.token;
 			localStorage.setItem('token', jwt);
-			navigate('/blog/all');
+			navigate('/blogs');
 		} catch (error) {
-			alert('Error');
+			alert(error);
 			console.error(error);
 		}
 	}
@@ -51,7 +52,10 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 					</div>
 				</div>
 
-				<div className="w-full mt-8 ">
+				<form
+					className="w-full mt-8"
+					onSubmit={(e: React.FormEvent) => sendRequest(e)}
+				>
 					{type === 'signup' && (
 						<LabelledInput
 							label="Name"
@@ -66,6 +70,7 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 					)}
 					<LabelledInput
 						label="Email"
+						type="email"
 						placeholder="john121@example.com"
 						onChange={(e) =>
 							setPostInputs((c) => ({
@@ -85,10 +90,10 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 							}))
 						}
 					/>
-					<Button className="mt-6 w-full" onClick={sendRequest}>
+					<Button className="mt-6 w-full">
 						{type === 'signin' ? 'Signin' : 'Signup'}
 					</Button>
-				</div>
+				</form>
 			</div>
 		</div>
 	);
