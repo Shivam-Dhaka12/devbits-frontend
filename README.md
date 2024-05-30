@@ -83,8 +83,16 @@ Install the necessary dependencies:
 
 Launch the development server:
 
+    npm run dev
+    
+  OR
+
+    npm start
+
 View the application by opening [http://localhost:{PORT}](http://localhost:3000) in your browser.
 
+<br/>
+<br/>
 
 ### ✍️ Acknowledgments
 
