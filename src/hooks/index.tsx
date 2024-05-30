@@ -7,6 +7,8 @@ export function useBlog({ id }: { id: string }) {
 	const [blog, setBlog] = useState<TBlog>();
 	const [loading, setLoading] = useState(true);
 
+	console.log('Backend URL:', BACKEND_URL);
+
 	useEffect(() => {
 		const fetchBlogs = async () => {
 			try {
@@ -29,7 +31,7 @@ export function useBlog({ id }: { id: string }) {
 		};
 
 		fetchBlogs();
-	}, []);
+	}, [id]);
 	return { blog, loading };
 }
 export function useBlogs() {
@@ -47,7 +49,6 @@ export function useBlogs() {
 						headers: { Authorization: `Bearer ${token}` },
 					}
 				);
-
 				setBlogs(response.data.data.blogs);
 				setLoading(false);
 			} catch (error) {
