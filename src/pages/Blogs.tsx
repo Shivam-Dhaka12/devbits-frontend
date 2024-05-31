@@ -18,9 +18,6 @@ export function Blogs() {
 			)}
 
 			{blogs.map((blog) => {
-				if (blog.publishedDate) {
-					blog.publishedDate = new Date(blog.publishedDate);
-				}
 				return (
 					<BlogCard
 						key={blog.id}
@@ -29,11 +26,15 @@ export function Blogs() {
 						content={blog.content}
 						authorName={blog.author.name}
 						publishedDate={
-							blog.publishedDate?.toLocaleDateString('en', {
-								day: 'numeric',
-								month: 'long',
-								year: 'numeric',
-							}) || 'N/A'
+							(blog?.publishedDate &&
+								new Date(
+									blog?.publishedDate
+								).toLocaleDateString('en-US', {
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric',
+								})) ||
+							'N/A'
 						}
 					/>
 				);
