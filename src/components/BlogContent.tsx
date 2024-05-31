@@ -11,7 +11,12 @@ export function BlogContent({ blog }: { blog: TBlog }) {
 				</div>
 				<div className="text-slate-500 mb-6">
 					Posted on{' '}
-					{blog.publishedDate?.toLocaleDateString() || 'N/A'}
+					{(blog?.publishedDate &&
+						new Date(blog?.publishedDate).toLocaleDateString(
+							'en-US',
+							{ year: 'numeric', month: 'long', day: 'numeric' }
+						)) ||
+						'N/A'}
 				</div>
 				<div className="text-slate-700 tracking-wide">
 					{blog.content}

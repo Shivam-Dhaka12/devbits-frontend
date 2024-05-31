@@ -12,7 +12,7 @@ export interface TBlog {
 		name: string;
 	};
 	published: boolean;
-	publishedDate?: Date;
+	publishedDate?: string;
 }
 export function Blog() {
 	const { id } = useParams();
