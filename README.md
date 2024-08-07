@@ -7,14 +7,14 @@
 
 ## 🌟 About the Project
 
-The repository contains the code for a blogging application that combines React for the frontend and Cloudflare Hono for the [Backend](https://github.com/Shivam-Dhaka12/devbits-backend) , offering a user-friendly platform for creating and sharing blog posts, akin to devbits. The application supports user sign-in and blog publication functionalities, ensuring a seamless experience for authors and readers alike.
+The repository contains the code for a blogging application that combines React for the frontend and Cloudflare Hono for the [Backend](https://github.com/Shivam-Dhaka12/devbits-backend) , offering a user-friendly platform for creating and sharing blog posts, akin to Medium. The application supports user sign-in and blog publication functionalities, ensuring a seamless experience for authors and readers alike.
 
 
 <br/>
 
 ### 👀 Live Demo
 
-[Live Demo Link](https://devbits-frontend-shivamdhaka.vercel.app/signin)
+[Live Demo Link](https://devbits-shivamdhaka.vercel.app/)
 
 <br/>
 
