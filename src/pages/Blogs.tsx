@@ -1,10 +1,23 @@
+import { toast } from 'react-toastify';
 import { BlogCard } from '../components/BlogCard';
 import { BlogsSkeleton } from '../components/BlogsSkeleton';
 import { useBlogs } from '../hooks';
 import { TBlog } from './Blog';
+import { useEffect } from 'react';
 
 export function Blogs() {
-	const { blogs, loading }: { blogs: TBlog[]; loading: boolean } = useBlogs();
+	const {
+		blogs,
+		loading,
+		error,
+	}: { blogs: TBlog[]; loading: boolean; error: string | null } = useBlogs();
+
+	// Show error toast only when error changes
+	useEffect(() => {
+		if (error) {
+			toast.error(error);
+		}
+	}, [error]);
 
 	return (
 		<div className="px-6 flex justify-center flex-col items-center mx-auto max-w-2xl mt-6">

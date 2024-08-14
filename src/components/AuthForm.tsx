@@ -3,9 +3,16 @@ import { LabelledInput } from './LabelledInput';
 import { useState } from 'react';
 import { signupInput } from '@shivamdhaka/medium-common';
 import { Button } from './Button';
-import axios from 'axios';
 import { BACKEND_URL } from '../../config.ts';
+import { authState } from '../atoms/authState';
+import { useSetRecoilState } from 'recoil';
+import { useHttpRequest } from '../hooks/index.tsx';
+import { toast } from 'react-toastify';
+import { Spinner } from './Spinner.tsx';
+
 export function Form({ type }: { type: 'signin' | 'signup' }) {
+	const setAuthState = useSetRecoilState(authState);
+	const { isLoading, error, sendRequest } = useHttpRequest();
 	//
 	const [postInputs, setPostInputs] = useState<signupInput>({
 		name: '',
@@ -15,19 +22,31 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 
 	const navigate = useNavigate();
 
-	async function sendRequest(e: React.FormEvent) {
+	async function sendAuthRequest(e: React.FormEvent) {
 		e.preventDefault();
+		const url = `${BACKEND_URL}/api/v1/user/${
+			type == 'signup' ? 'signup' : 'signin'
+		}`;
 		try {
-			const url = `${BACKEND_URL}/api/v1/user/${
-				type == 'signup' ? 'signup' : 'signin'
-			}`;
-			const response = await axios.post(url, postInputs);
-			const jwt = response.data.token;
-			localStorage.setItem('token', jwt);
-			navigate('/blogs');
-		} catch (error) {
-			alert(error);
-			console.error(error);
+			const response = await sendRequest({
+				method: 'post',
+				url,
+				data: postInputs,
+			});
+			if (response.status >= 200 && response.status < 300) {
+				setAuthState((prevState) => ({
+					...prevState,
+					isLoggedIn: true,
+					userId: null,
+					username: null,
+				}));
+				toast.success('Logged in successfully');
+				navigate('/blogs');
+			} else {
+				toast.error('Something went wrong');
+			}
+		} catch (e) {
+			toast.error(error);
 		}
 	}
 	return (
@@ -54,7 +73,7 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 
 				<form
 					className="w-full mt-8"
-					onSubmit={(e: React.FormEvent) => sendRequest(e)}
+					onSubmit={(e: React.FormEvent) => sendAuthRequest(e)}
 				>
 					{type === 'signup' && (
 						<LabelledInput
@@ -91,7 +110,13 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 						}
 					/>
 					<Button className="mt-6 w-full">
-						{type === 'signin' ? 'Signin' : 'Signup'}
+						{isLoading ? (
+							<Spinner className="w-6 h-6" />
+						) : type === 'signin' ? (
+							'Signin'
+						) : (
+							'Signup'
+						)}
 					</Button>
 				</form>
 			</div>

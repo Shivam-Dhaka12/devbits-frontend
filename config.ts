@@ -1,2 +1,2 @@
-const BACKEND_URL = 'https://medium-backend.shivamdhaka1200.workers.dev';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export { BACKEND_URL };
