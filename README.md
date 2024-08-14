@@ -1,20 +1,20 @@
-# 📝 Medium
+# 📝 Devbits
 
-<img width="812" alt="image" src="https://github.com/Shivam-Dhaka12/medium-frontend/assets/77571480/c58596cf-7f07-44a0-9a21-c83ef386a17c">
+<img width="812" alt="image" src="https://github.com/Shivam-Dhaka12/devbits-frontend/assets/77571480/c58596cf-7f07-44a0-9a21-c83ef386a17c">
 
 <br/>
 <br/>
 
 ## 🌟 About the Project
 
-The repository contains the code for a blogging application that combines React for the frontend and Cloudflare Hono for the [Backend](https://github.com/Shivam-Dhaka12/medium-backend) , offering a user-friendly platform for creating and sharing blog posts, akin to Medium. The application supports user sign-in and blog publication functionalities, ensuring a seamless experience for authors and readers alike.
+The repository contains the code for a blogging application that combines React for the frontend and Cloudflare Hono for the [Backend](https://github.com/Shivam-Dhaka12/devbits-backend) , offering a user-friendly platform for creating and sharing blog posts, akin to Medium. The application supports user sign-in and blog publication functionalities, ensuring a seamless experience for authors and readers alike.
 
 
 <br/>
 
 ### 👀 Live Demo
 
-[Live Demo Link](https://medium-frontend-shivamdhaka.vercel.app/signin)
+[Live Demo Link](https://devbits-shivamdhaka.vercel.app/)
 
 <br/>
 
@@ -71,7 +71,7 @@ Ensure Node.js is installed by running:
 
 Clone the repository and navigate into the project directory:
 
-    git clone https://github.com/Shivam-Dhaka12/medium-frontend.git && cd medium-frontend
+    git clone https://github.com/Shivam-Dhaka12/devbits-frontend.git && cd devbits-frontend
 
 
 Install the necessary dependencies:
