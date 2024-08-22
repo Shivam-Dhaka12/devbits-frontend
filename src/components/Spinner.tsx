@@ -1,4 +1,4 @@
-export function Spinner({ className }) {
+export function Spinner({ className }: { className?: string }) {
 	return (
 		<div role="status" className="flex items-center justify-center">
 			<svg

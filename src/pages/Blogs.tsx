@@ -12,7 +12,17 @@ export function Blogs() {
 		error,
 	}: { blogs: TBlog[]; loading: boolean; error: string | null } = useBlogs();
 
-	// Show error toast only when error changes
+	if (blogs) {
+		blogs.sort((a: TBlog, b: TBlog) => {
+			const dateA = a.publishedDate
+				? new Date(a.publishedDate)
+				: new Date(0);
+			const dateB = b.publishedDate
+				? new Date(b.publishedDate)
+				: new Date(0);
+			return dateB.getTime() - dateA.getTime();
+		});
+	} // Show error toast only when error changes
 	useEffect(() => {
 		if (error) {
 			toast.error(error);

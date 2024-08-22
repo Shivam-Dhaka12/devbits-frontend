@@ -1,38 +1,46 @@
-import axios from 'axios';
 import { Button } from '../components/Button';
 import { BACKEND_URL } from '../../config';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useHttpRequest } from '../hooks';
+import { toast } from 'react-toastify';
+import { Spinner } from '../components/Spinner';
 export function Publish() {
+	const { isLoading, error, sendRequest } = useHttpRequest();
 	const [blogData, setBlogData] = useState({
 		title: '',
 		content: '',
-		published: false,
+		published: true,
 	});
 
 	const navigate = useNavigate();
-	async function sendRequest(e: React.FormEvent) {
+	async function sendPublishRequest(e: React.FormEvent) {
 		e.preventDefault();
-		await axios.post(
-			`${BACKEND_URL}/api/v1/blog`,
-			{
-				...blogData,
-				published: true,
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('token')}`,
-				},
+		const url = `${BACKEND_URL}/api/v1/blog`;
+		try {
+			const response = await sendRequest({
+				method: 'post',
+				url,
+				data: blogData,
+			});
+			console.log(response);
+			if (response.status >= 200 && response.status < 300) {
+				toast.success('Published Successfully');
+				navigate('/user/blogs');
+			} else {
+				toast.error('Something went wrong');
 			}
-		);
+		} catch (e) {
+			toast.error(error);
+		}
 
-		navigate('/blogs');
+		navigate('/user/blogs');
 	}
 	return (
 		<div className="flex justify-center w-full px-16">
 			<form
 				className="max-w-4xl my-10 w-full"
-				onSubmit={(e) => sendRequest(e)}
+				onSubmit={(e) => sendPublishRequest(e)}
 			>
 				<input
 					type="text"
@@ -49,7 +57,9 @@ export function Publish() {
 						setBlogData((c) => ({ ...c, content: e.target.value }))
 					}
 				/>
-				<Button className="mt-6">Publish</Button>
+				<Button className="mt-6 w-32">
+					{isLoading ? <Spinner className="w-4 h-4" /> : 'Publish'}
+				</Button>
 			</form>
 		</div>
 	);

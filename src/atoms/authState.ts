@@ -1,4 +1,10 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist({
+	key: 'recoil-auth',
+	storage: sessionStorage,
+});
 
 type authAtom = {
 	isLoggedIn: boolean;
@@ -12,4 +18,5 @@ export const authState = atom<authAtom>({
 		userId: null,
 		username: null,
 	},
+	effects_UNSTABLE: [persistAtom],
 });

@@ -18,7 +18,7 @@ export function BlogCard({
 	return (
 		<Link
 			to={{
-				pathname: `/blog/${id}`,
+				pathname: `/user/blog/${id}`,
 			}}
 			className="min-w-full"
 		>
@@ -66,7 +66,7 @@ export function AvatarInitials({
 		<div
 			className={`relative inline-flex items-center justify-center ${
 				size === 'sm' ? 'w-6 h-6' : 'w-8 h-8'
-			} h-6 overflow-hidden bg-gray-800 rounded-full`}
+			} h-6 overflow-hidden bg-gray-800 rounded-full cursor-pointer`}
 		>
 			<span className="font-medium text-gray-300 text-xs">
 				{initials}

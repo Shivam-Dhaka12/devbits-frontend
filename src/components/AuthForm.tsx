@@ -33,15 +33,16 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 				url,
 				data: postInputs,
 			});
+			console.log(response);
 			if (response.status >= 200 && response.status < 300) {
 				setAuthState((prevState) => ({
 					...prevState,
 					isLoggedIn: true,
-					userId: null,
-					username: null,
+					userId: response.data?.id || null,
+					username: response.data?.username || null,
 				}));
 				toast.success('Logged in successfully');
-				navigate('/blogs');
+				navigate('/user/blogs');
 			} else {
 				toast.error('Something went wrong');
 			}
