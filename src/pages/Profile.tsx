@@ -15,7 +15,7 @@ const initialUser = {
 
 export function Profile() {
 	const [user, setUser] = useState(initialUser);
-	const [auth, setAuth] = useRecoilState(authState);
+	const [auth] = useRecoilState(authState);
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedUser, setEditedUser] = useState(user);
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
