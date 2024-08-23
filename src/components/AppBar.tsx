@@ -21,13 +21,15 @@ export function AppBar() {
 								type="button"
 								className="focus:outline-none text-white  focus:ring-4  font-medium rounded-full text-sm px-4 py-1.5 mr-2 bg-green-600 hover:bg-green-700 focus:ring-green-800"
 							>
-								New
+								New Blog
 							</button>
 						</Link>
-						<AvatarInitials
-							authorName={auth.username || 'Test'}
-							size="lg"
-						/>
+						<Link to={'/user/publish'} className="cursor-pointer">
+							<AvatarInitials
+								authorName={auth.username || 'Test'}
+								size="lg"
+							/>
+						</Link>
 					</>
 				)}
 			</div>

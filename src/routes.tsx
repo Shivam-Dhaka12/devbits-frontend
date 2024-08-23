@@ -6,11 +6,22 @@ import { Blogs } from './pages/Blogs';
 import { Publish } from './pages/Publish';
 import { authState } from './atoms/authState';
 import { useRecoilValue } from 'recoil';
+import { Profile } from './pages/Profile';
 
 export function AppRoutes() {
 	const auth = useRecoilValue(authState);
 	return (
 		<Routes>
+			<Route
+				path="/"
+				element={
+					auth.isLoggedIn ? (
+						<Navigate to="/user/blogs" replace />
+					) : (
+						<Navigate to="/signin" replace />
+					)
+				}
+			/>
 			<Route
 				path="/signin"
 				element={
@@ -47,6 +58,11 @@ export function AppRoutes() {
 						key="publish"
 						path="publish"
 						element={<Publish />}
+					/>,
+					<Route
+						key="profile"
+						path="profile"
+						element={<Profile />}
 					/>,
 				].filter(Boolean)}
 			></Route>

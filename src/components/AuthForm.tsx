@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { LabelledInput } from './LabelledInput';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { signupInput } from '@shivamdhaka/medium-common';
 import { Button } from './Button';
 import { BACKEND_URL } from '../../config.ts';
@@ -12,7 +12,10 @@ import { Spinner } from './Spinner.tsx';
 
 export function Form({ type }: { type: 'signin' | 'signup' }) {
 	const setAuthState = useSetRecoilState(authState);
-	const { isLoading, error, sendRequest } = useHttpRequest();
+	const { error, sendRequest } = useHttpRequest();
+
+	const [isSignInLoading, setIsSignInLoading] = useState(false);
+	const [isGuestSignInLoading, setIsGuestSignInLoading] = useState(false);
 	//
 	const [postInputs, setPostInputs] = useState<signupInput>({
 		name: '',
@@ -22,8 +25,7 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 
 	const navigate = useNavigate();
 
-	async function sendAuthRequest(e: React.FormEvent) {
-		e.preventDefault();
+	async function sendAuthRequest(postInputs: signupInput) {
 		const url = `${BACKEND_URL}/api/v1/user/${
 			type == 'signup' ? 'signup' : 'signin'
 		}`;
@@ -48,7 +50,26 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 			}
 		} catch (e) {
 			toast.error(error);
+		} finally {
+			setIsSignInLoading(false);
+			setIsGuestSignInLoading(false);
 		}
+	}
+
+	async function handleSignin(e: FormEvent) {
+		e.preventDefault();
+		setIsGuestSignInLoading(true);
+		await sendAuthRequest(postInputs);
+	}
+
+	async function handleGuestSignin() {
+		setIsGuestSignInLoading(true);
+		const guestInputs: signupInput = {
+			email: 'guest@example.com',
+			name: 'Guest User',
+			password: 'guest1234',
+		};
+		await sendAuthRequest(guestInputs);
 	}
 	return (
 		<div className="h-screen flex justify-center flex-col items-center text-slate-800">
@@ -74,7 +95,7 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 
 				<form
 					className="w-full mt-8"
-					onSubmit={(e: React.FormEvent) => sendAuthRequest(e)}
+					onSubmit={(e: React.FormEvent) => handleSignin(e)}
 				>
 					{type === 'signup' && (
 						<LabelledInput
@@ -111,7 +132,7 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 						}
 					/>
 					<Button className="mt-6 w-full">
-						{isLoading ? (
+						{isSignInLoading ? (
 							<Spinner className="w-6 h-6" />
 						) : type === 'signin' ? (
 							'Signin'
@@ -119,6 +140,20 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 							'Signup'
 						)}
 					</Button>
+					{type == 'signin' && (
+						<Button
+							className="mt-2 w-full bg-slate-100"
+							color="white"
+							type="button"
+							onClick={handleGuestSignin}
+						>
+							{isGuestSignInLoading ? (
+								<Spinner className="w-6 h-6" />
+							) : (
+								'Signin as Guest'
+							)}
+						</Button>
+					)}
 				</form>
 			</div>
 		</div>

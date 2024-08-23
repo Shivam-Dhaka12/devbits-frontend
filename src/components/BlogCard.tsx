@@ -53,7 +53,7 @@ export function AvatarInitials({
 	size,
 }: {
 	authorName: string;
-	size: 'sm' | 'lg';
+	size: 'sm' | 'lg' | 'xl';
 }) {
 	if (!authorName) return;
 
@@ -65,12 +65,16 @@ export function AvatarInitials({
 	return (
 		<div
 			className={`relative inline-flex items-center justify-center ${
-				size === 'sm' ? 'w-6 h-6' : 'w-8 h-8'
-			} h-6 overflow-hidden bg-gray-800 rounded-full cursor-pointer`}
+				size === 'sm'
+					? 'w-6 h-6 text-xs'
+					: size === 'lg'
+					? 'w-8 h-8 text-xs'
+					: size === 'xl'
+					? 'w-32 h-32 text-6xl'
+					: ''
+			} h-6 overflow-hidden bg-gray-900 rounded-full `}
 		>
-			<span className="font-medium text-gray-300 text-xs">
-				{initials}
-			</span>
+			<span className="font-medium text-gray-50 ">{initials}</span>
 		</div>
 	);
 }
