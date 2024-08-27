@@ -17,7 +17,7 @@ export function Button({
 		<button
 			className={`${
 				color == 'white'
-					? `bg-slate-50 text-slate-900 border border-slate-900`
+					? `bg-slate-50 text-slate-900 border border-slate-900 hover:bg-slate-100`
 					: `bg-slate-900 text-slate-50 `
 			} px-4 py-2 rounded-lg min-h-12 ${className} hover:bg-slate-950`}
 			type={type ? type : 'submit'}

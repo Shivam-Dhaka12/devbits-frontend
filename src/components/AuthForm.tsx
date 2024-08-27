@@ -26,6 +26,7 @@ export function Form({ type }: { type: 'signin' | 'signup' }) {
 	const navigate = useNavigate();
 
 	async function sendAuthRequest(postInputs: signupInput) {
+		console.log(BACKEND_URL);
 		const url = `${BACKEND_URL}/api/v1/user/${
 			type == 'signup' ? 'signup' : 'signin'
 		}`;
